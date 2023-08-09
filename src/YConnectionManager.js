@@ -56,8 +56,8 @@ class YConnectionManager {
           .getMap()
           .delete(key);
       }
-      this.yConnectionMap[signaling][roomName].yDoc.destroy();
     }
+    this.yConnectionMap[signaling][roomName].yDoc.destroy();
   }
 }
 
