@@ -1,0 +1,40 @@
+{
+  "name": "use-y-js",
+  "version": "1.1.0",
+  "description": "A custom hook simplify create an CRDT document",
+  "author": {
+    "name": "VoNgocTrong - Rio",
+    "email": "trong04102000@gmail.com"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "react-hooks"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "bump": "npm version",
+    "example": "cd example && yarn install && yarn package",
+    "prepublishOnly": "yarn build",
+    "watch": "nodemon --watch src --exec \"yarn build\""
+  },
+  "license": "MIT",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ngoctrong102/useYjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ngoctrong102/useYjs/issues"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "nodemon": "^2.0.12",
+    "y-websocket": "^1.5.0",
+    "yjs": "^13.6.7"
+  }
+}
