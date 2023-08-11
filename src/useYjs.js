@@ -5,19 +5,20 @@ import Y_CONNECTION_MANAGER from "./YConnectionManager";
 export default function useYjs({
   signaling,
   roomName,
+  params = {},
   initData = {},
   initUserInfo = {},
   intervalSyncTime = 250,
 }) {
   const [ydoc] = useState(
-    Y_CONNECTION_MANAGER.getYConnection(signaling, roomName).yDoc
+    Y_CONNECTION_MANAGER.getYConnection(signaling, roomName, params).yDoc
   );
   const [data, setData] = useState({
     ...initData,
     ...Object.fromEntries(new Map(ydoc.getMap().entries())),
   });
   const [provider] = useState(
-    Y_CONNECTION_MANAGER.getYConnection(signaling, roomName).provider
+    Y_CONNECTION_MANAGER.getYConnection(signaling, roomName, params).provider
   );
 
   const [userInfoMap, setUserInfoMap] = useState({});

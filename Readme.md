@@ -22,6 +22,10 @@ import { useYjs } from "use-y-js";
 const { data, updateData, userInfoMap, updateFieldLocalUserInfo } = useYjs({
   signaling: "ws://localhost:4444",
   roomName: "your-room-name",
+  // use for auth
+  params: {
+    token: "anthing"
+  }
   // POJO
   initData: {
     title: "Doc title",

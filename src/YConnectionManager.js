@@ -13,14 +13,14 @@ class YConnectionManager {
     });
   }
 
-  getYConnection(signaling, roomName) {
+  getYConnection(signaling, roomName, params) {
     if (!this.yConnectionMap[signaling]) {
       this.yConnectionMap[signaling] = {};
     }
     if (!this.yConnectionMap[signaling][roomName]) {
       let yDoc = new Y.Doc();
       let provider = new WebsocketProvider(signaling, roomName, yDoc, {
-        disableBc: true,
+        params
       });
       this.yConnectionMap[signaling][roomName] = {
         yDoc,
