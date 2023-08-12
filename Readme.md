@@ -44,3 +44,6 @@ const { data, updateData, userInfoMap, updateFieldLocalUserInfo } = useYjs({
   intervalSyncTime: 300
 });
 ```
+
+## Demo
+![Example](example.gif)
