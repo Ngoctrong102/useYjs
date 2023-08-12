@@ -4,30 +4,34 @@ import { WebsocketProvider } from "y-websocket";
 class YConnectionManager {
   constructor() {
     this.yConnectionMap = {};
-    window.addEventListener("beforeunload", () => {
-      Object.keys(this.yConnectionMap).forEach((signaling) => {
-        Object.keys(this.yConnectionMap[signaling]).forEach((roomName) => {
-          this._destroyYdoc(signaling, roomName);
+    if (typeof window !== "undefined") {
+      window.addEventListener("beforeunload", () => {
+        Object.keys(this.yConnectionMap).forEach((signaling) => {
+          Object.keys(this.yConnectionMap[signaling]).forEach((roomName) => {
+            this._destroyYdoc(signaling, roomName);
+          });
         });
       });
-    });
+    }
   }
 
   getYConnection(signaling, roomName, params) {
-    if (!this.yConnectionMap[signaling]) {
-      this.yConnectionMap[signaling] = {};
-    }
-    if (!this.yConnectionMap[signaling][roomName]) {
-      let yDoc = new Y.Doc();
-      let provider = new WebsocketProvider(signaling, roomName, yDoc, {
-        params
-      });
-      this.yConnectionMap[signaling][roomName] = {
-        yDoc,
-        provider,
-      };
-    }
-    return this.yConnectionMap[signaling][roomName];
+    if (typeof window !== "undefined") {
+      if (!this.yConnectionMap[signaling]) {
+        this.yConnectionMap[signaling] = {};
+      }
+      if (!this.yConnectionMap[signaling][roomName]) {
+        let yDoc = new Y.Doc();
+        let provider = new WebsocketProvider(signaling, roomName, yDoc, {
+          params,
+        });
+        this.yConnectionMap[signaling][roomName] = {
+          yDoc,
+          provider,
+        };
+      }
+      return this.yConnectionMap[signaling][roomName];
+    } else return {};
   }
 
   leaveRoom(signaling, roomName) {
@@ -45,16 +49,13 @@ class YConnectionManager {
 
   _destroyYdoc(signaling, roomName) {
     if (
-      this.yConnectionMap[signaling][
-        roomName
-      ].provider.awareness.getStates().size === 1
+      this.yConnectionMap[signaling][roomName].provider.awareness.getStates()
+        .size === 1
     ) {
       for (let key of this.yConnectionMap[signaling][roomName].yDoc
         .getMap()
         .keys()) {
-        this.yConnectionMap[signaling][roomName].yDoc
-          .getMap()
-          .delete(key);
+        this.yConnectionMap[signaling][roomName].yDoc.getMap().delete(key);
       }
     }
     this.yConnectionMap[signaling][roomName].yDoc.destroy();
